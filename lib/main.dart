@@ -12,9 +12,8 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
   final String title;
 
   @override
@@ -48,17 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return /*MaterialApp(
-      home: const MapPage(),
-    );*/
-      Scaffold(
+    return Scaffold(
         backgroundColor: Colors.grey[300],
       body: SafeArea(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          //Logo
           const Center(
               child: CircleAvatar(
                 backgroundColor: Colors.white,
@@ -68,7 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
          const SizedBox(height: 30),
 
-         //Text
          RichText(
               text: const TextSpan(
                   text: 'WELCOME TO RAKSHAK!',
@@ -76,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontFamily: 'BebasNeue',
                     color: Colors.black,
                     fontSize: 32,
-                    //fontWeight: FontWeight.bold
                   )
               )
           ),
@@ -93,10 +86,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
           const SizedBox(height: 50),
 
-          //Login
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.deepPurple,
+              backgroundColor: Colors.deepPurple,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
               fixedSize:const Size.fromWidth(300)
             ),
@@ -111,11 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
           const SizedBox(height: 20),
 
-          //Registration
           OutlinedButton(
             style: OutlinedButton.styleFrom(
-              primary: Colors.deepPurple,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              foregroundColor: Colors.deepPurple, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
               fixedSize: const Size.fromWidth(300),
               side: const BorderSide(color: Colors.deepPurple)
             ),

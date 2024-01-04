@@ -3,7 +3,7 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<LatLng?> acquireCurrentLocation() async{
-  Location location = new Location();
+  Location location = Location();
 
   bool serviceEnabled;
   PermissionStatus permissionGranted;
@@ -32,8 +32,8 @@ Future<LatLng?> acquireCurrentLocation() async{
   return LatLng(locationData.latitude!, locationData.longitude!);
 }
 
-setCurrentLocation(LocationData _locationData) async{
+setCurrentLocation(LocationData locationData) async{
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  sharedPreferences.setDouble("latitude", _locationData.latitude!.toDouble());
-  sharedPreferences.setDouble("longitude", _locationData.longitude!.toDouble());
+  sharedPreferences.setDouble("latitude", locationData.latitude!.toDouble());
+  sharedPreferences.setDouble("longitude", locationData.longitude!.toDouble());
 }

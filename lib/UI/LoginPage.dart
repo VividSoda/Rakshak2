@@ -6,7 +6,7 @@ import 'package:rakshak_test/UI/ForgotPassword.dart';
 import 'Home.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -18,6 +18,13 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool _loading = false;
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +39,6 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 50),
-
-                  //Logo
                   const Center(
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
@@ -42,8 +47,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-
-                  //Login
                   RichText(
                       text: const TextSpan(
                           text: 'Rakshak Log In!',
@@ -61,7 +64,6 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Column(
                       children: [
-                        //Email
                         TextFormField(
                             decoration: InputDecoration(
                               fillColor: Colors.grey[200],
@@ -76,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                           validator: (value){
                             bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
 
-                              if (value!.isEmpty){
+                              if (value.isEmpty){
                                 return "Enter email!!!!";
                               }
 
@@ -92,7 +94,6 @@ class _LoginPageState extends State<LoginPage> {
 
                         const SizedBox(height: 20),
 
-                        //Password
                         TextFormField(
                           controller: _password,
                           obscureText: _isPasswordHidden,
@@ -129,12 +130,11 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
 
-                        //Forgot Password??
                         Align(
                           alignment: Alignment.bottomRight,
                           child: TextButton(
                             style: TextButton.styleFrom(
-                              primary: Colors.blue
+                              foregroundColor: Colors.blue
                             ),
                               onPressed: (){
                                   Navigator.push(
@@ -152,10 +152,9 @@ class _LoginPageState extends State<LoginPage> {
 
                         const SizedBox(height: 5),
 
-                        //Login Button
                         _loading? const CircularProgressIndicator() : ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.deepPurple,
+                                backgroundColor: Colors.deepPurple,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15)),
                                 fixedSize: const Size(350, 50)
@@ -171,10 +170,10 @@ class _LoginPageState extends State<LoginPage> {
                               User? result = await AuthService().login(_email.text, _password.text, context);
 
                               if(result!=null){
-                                print("Success");
+                                // ignore: use_build_context_synchronously
                                 Navigator.pushAndRemoveUntil(
                                     context,
-                                    MaterialPageRoute(builder: (context) => HomePage()),
+                                    MaterialPageRoute(builder: (context) => const HomePage()),
                                         (route) => false
                                 );
                               }

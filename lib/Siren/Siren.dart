@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class SirenPage extends StatefulWidget {
-  const SirenPage({Key? key}) : super(key: key);
+  const SirenPage({super.key});
 
   @override
   State<SirenPage> createState() => _SirenPageState();
@@ -49,7 +49,7 @@ class _SirenPageState extends State<SirenPage> {
 
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.deepPurple,
+                      backgroundColor: Colors.deepPurple,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                       fixedSize: const Size(185, 50)
                   ),

@@ -6,7 +6,7 @@ import 'package:rakshak_test/Maps/location.helper.dart';
 import 'package:rakshak_test/main.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({Key? key}) : super(key: key);
+  const MapPage({super.key});
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -28,6 +28,7 @@ class _MapPageState extends State<MapPage> {
           TextButton.icon(
             onPressed: () async {
               await AuthService().signOut();
+              // ignore: use_build_context_synchronously
               Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => MyHomePage(title: "Rakshak"))
@@ -36,7 +37,7 @@ class _MapPageState extends State<MapPage> {
             icon: const Icon(Icons.logout),
             label: const Text("Sign out"),
             style: TextButton.styleFrom(
-                primary: Colors.white
+                foregroundColor: Colors.white
             ),
           )
         ],

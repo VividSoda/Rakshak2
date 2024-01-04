@@ -6,7 +6,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:rakshak_test/Firebase/firestore_service.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -18,10 +18,18 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isConfirmPasswordHidden = true;
   final TextEditingController _password = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
-  final TextEditingController _dob = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _name = TextEditingController();
   bool _loading = false;
+
+  @override
+  void dispose() {
+    _password.dispose();
+    _confirmPass.dispose();
+    _email.dispose();
+    _name.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +94,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                  children: [
 
-                   //Name
                    TextFormField(
                      validator: (value){
                        if (value!.isEmpty) {
@@ -109,7 +116,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                    const SizedBox(height: 10),
 
-                   //Email or Phone
                    TextFormField(
                      controller: _email,
                      decoration: InputDecoration(
@@ -122,7 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
                      validator: (value){
                        bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value!);
 
-                       if(value!.isEmpty){
+                       if(value.isEmpty){
                          return "Enter email!!!!";
                        }
 
@@ -138,13 +144,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
                    const SizedBox(height: 10),
 
-                   //Password
                    TextFormField(
                      obscureText: _isPasswordHidden,
                      decoration: InputDecoration(
                        filled: true,
                        fillColor: Colors.grey[200],
-                       //prefix: const Icon(Icons.lock),
                          suffixIcon: IconButton(
                            onPressed: (){
                              setState(() {
@@ -177,7 +181,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                    const SizedBox(height: 10),
 
-                   //Confirm Password
                    TextFormField(
                      controller: _confirmPass,
                      validator: (value){
@@ -197,7 +200,6 @@ class _RegisterPageState extends State<RegisterPage> {
                      decoration: InputDecoration(
                        fillColor: Colors.grey[200],
                        filled: true,
-                       //prefix: const Icon(Icons.lock),
                          suffixIcon: IconButton(
                            onPressed: (){
                              setState(() {
@@ -219,7 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                    //Register Button
                   _loading? const CircularProgressIndicator() : ElevatedButton(
                      style: ElevatedButton.styleFrom(
-                       primary: Colors.deepPurple,
+                       backgroundColor: Colors.deepPurple,
                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                        fixedSize:const Size(350, 50)
                      ),
@@ -228,18 +230,12 @@ class _RegisterPageState extends State<RegisterPage> {
                          _loading = true;
                        });
                           if (_formKey.currentState!.validate()){
-                              /*Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const LoginPage())
-                              );*/
                             User? result =  await AuthService().register(_email.text, _password.text,context);
 
-                            //Send data to firestore
                             await FirestoreService().insertNote(_name.text, _email.text, _password.text, _confirmPass.text);
 
                             if(result!= null){
-                              print("Success");
+                              // ignore: use_build_context_synchronously
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(builder: (context) => LoginPage()),
@@ -260,8 +256,8 @@ class _RegisterPageState extends State<RegisterPage> {
                    const SizedBox(height: 20),
 
                    //OR
-                   Row(
-                     children: const [
+                   const Row(
+                     children: [
                        Expanded(
                          child: Divider(
                            indent: 50,
@@ -286,7 +282,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                    const SizedBox(height: 15),
 
-                   //Continue with Google
                   _loading? const CircularProgressIndicator() : SignInButton(
                        Buttons.Google,
                        text: "Continue with Google",
@@ -297,9 +292,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
                          await AuthService().signInWithGoogle();
 
+                         // ignore: use_build_context_synchronously
                          Navigator.pushAndRemoveUntil(
                              context,
-                             MaterialPageRoute(builder: (context) => LoginPage()),
+                             MaterialPageRoute(builder: (context) => const LoginPage()),
                                  (route) => false
                          );
 

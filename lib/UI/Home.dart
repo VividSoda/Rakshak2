@@ -5,10 +5,8 @@ import 'package:rakshak_test/Contacts/add_emergency_contact.dart';
 import 'package:rakshak_test/Maps/map_page.dart';
 import 'package:rakshak_test/Siren/Siren.dart';
 
-import '../main.dart';
-
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
